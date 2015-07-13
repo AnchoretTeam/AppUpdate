@@ -57,5 +57,10 @@ namespace AppUpdate.Core
             }
             return true;
         }
+
+        internal static void HelloWorld()
+        {
+            Console.WriteLine("HelloWorld");
+        }
     }
 }
