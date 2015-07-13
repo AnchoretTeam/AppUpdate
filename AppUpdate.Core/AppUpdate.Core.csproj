@@ -53,10 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileHashHelper.cs" />
-    <Compile Include="IFileDescription.cs" />
+    <Compile Include="IFileHash.cs" />
     <Compile Include="IAppUpdateInfo.cs" />
-    <Compile Include="Network\Filter\Codec\Demux\FileDescriptionsProtocolDecoder.cs" />
-    <Compile Include="Network\Filter\Codec\Demux\FileDescriptionsProtocolEncoder.cs" />
+    <Compile Include="Network\Filter\Codec\Demux\FileHashesProtocolDecoder.cs" />
+    <Compile Include="Network\Filter\Codec\Demux\FileHashesProtocolEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
