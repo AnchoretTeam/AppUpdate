@@ -58,14 +58,5 @@ namespace AppUpdate.Core
             return true;
         }
 
-        internal static void HelloWorld()
-        {
-            Console.WriteLine("HelloWorld");
-        }
-
-        internal static void HolyShit()
-        {
-            Console.WriteLine("Holy Shit!");
-        }
     }
 }
