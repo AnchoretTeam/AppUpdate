@@ -60,6 +60,9 @@
     <Compile Include="IFileHash.cs" />
     <Compile Include="IAppUpdateInfo.cs" />
     <Compile Include="IUpdateFileCollection.cs" />
+    <Compile Include="MessageType.cs" />
+    <Compile Include="Network\Filter\Codec\Demux\UpdateFileCollectionProtocolDecoder.cs" />
+    <Compile Include="Network\Filter\Codec\Demux\UpdateFileCollectionProtocolEncoder.cs" />
     <Compile Include="Network\Filter\Codec\Demux\FileHashesProtocolDecoder.cs" />
     <Compile Include="Network\Filter\Codec\Demux\FileHashesProtocolEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

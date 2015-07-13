@@ -19,5 +19,5 @@ namespace AppUpdate.Core
         //...
     }
 
-    public interface 
+    
 }
