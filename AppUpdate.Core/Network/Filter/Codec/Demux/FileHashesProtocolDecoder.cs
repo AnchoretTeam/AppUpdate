@@ -10,7 +10,7 @@ using Mina.Filter.Codec.Demux;
 
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
-    public sealed class FileDescriptionsProtocolDecoder : IMessageDecoder
+    public sealed class FileHashesProtocolDecoder : IMessageDecoder
     {
         public MessageDecoderResult Decodable(IoSession session, IoBuffer input)
         {

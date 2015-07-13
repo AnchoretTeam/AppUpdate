@@ -6,7 +6,7 @@ using Mina.Filter.Codec.Demux;
 
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
-    public sealed class FileDescriptionsProtocolEncoder : IMessageEncoder<IList<IFileHash>>
+    public sealed class FileHashesProtocolEncoder : IMessageEncoder<IList<IFileHash>>
     {
         public void Encode(IoSession session, IList<IFileHash> message, IProtocolEncoderOutput output)
         {
