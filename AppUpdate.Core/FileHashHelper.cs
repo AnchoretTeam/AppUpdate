@@ -28,6 +28,7 @@ namespace AppUpdate.Core
                 return sha1.ComputeHash(fileStream);
             }
         }
+
         internal static byte[] ComputeFileHash(byte[] fileBytes)
         {
             using (var sha1 = new SHA1CryptoServiceProvider())
