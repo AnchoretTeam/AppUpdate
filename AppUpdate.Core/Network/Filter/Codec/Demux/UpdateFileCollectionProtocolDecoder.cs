@@ -3,32 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mina.Core.Buffer;
-using Mina.Core.Session;
-using Mina.Filter.Codec;
 using Mina.Filter.Codec.Demux;
+using Mina.Core.Session;
+using Mina.Core.Buffer;
+using Mina.Filter.Codec;
 using Newtonsoft.Json;
 
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
-    public sealed class FileHashesProtocolDecoder : IMessageDecoder
+    class UpdateFileCollectionProtocolDecoder:IMessageDecoder
     {
-        private IList<IFileHash> _decodeMessage;
-        public MessageDecoderResult Decodable(IoSession session, IoBuffer input)
+        private IUpdateFileCollection _decodeMessage;
+        public MessageDecoderResult Decodable(IoSession session,IoBuffer input)
         {
             var type=(MessageType)input.Get();
-            if (type==MessageType.Update_FileHash)
+            if (type == MessageType.Update_UpdateFileCollection)
             {
-                var message = input.GetString(Encoding.UTF8);
-                _decodeMessage=JsonConvert.DeserializeObject<IList<IFileHash>>(message);
+                var message=input.GetString(Encoding.UTF8);
+                var _decodeMessage=JsonConvert.DeserializeObject<IUpdateFileCollection>(message);
                 return MessageDecoderResult.OK;
             }
             return MessageDecoderResult.NotOK;
         }
 
-        public MessageDecoderResult Decode(IoSession session, IoBuffer input, IProtocolDecoderOutput output)
+        public MessageDecoderResult Decode(IoSession session, IoBuffer input, Mina.Filter.Codec.IProtocolDecoderOutput output)
         {
-            // TODO Client->Server 所有文件的校验值
             output.Write(_decodeMessage);
             return MessageDecoderResult.OK;
         }

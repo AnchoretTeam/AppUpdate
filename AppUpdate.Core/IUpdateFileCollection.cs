@@ -22,7 +22,7 @@ namespace AppUpdate.Core
         /// <param name="fileName">文件名</param>
         void LoadFromFile(string fileName);
         /// <summary>
-        /// 将更新文件集合保持至文件
+        /// 将更新文件集合保存至文件
         /// </summary>
         /// <param name="fileName">文件名</param>
         void SaveFile(string fileName);
