@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Mina.Core.Buffer;
 using Mina.Core.Session;
 using Mina.Filter.Codec;
 using Mina.Filter.Codec.Demux;
+using Newtonsoft.Json;
 
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
@@ -15,10 +17,10 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
             var buffer = IoBuffer.Allocate(30);
             buffer.AutoExpand = true;
             //写代码
-
+            buffer.Put((byte) FunctionType.Update);
+            buffer.PutString(JsonConvert.SerializeObject(message),Encoding.UTF8);
             buffer.Flip();
             output.Write(buffer);
-            throw new NotImplementedException();
         }
 
         public void Encode(IoSession session, object message, IProtocolEncoderOutput output)
@@ -27,5 +29,10 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
         }
     }
 
-
+    public enum FunctionType:byte
+    {
+        Update,
+        Register
+    }
+ 
 }

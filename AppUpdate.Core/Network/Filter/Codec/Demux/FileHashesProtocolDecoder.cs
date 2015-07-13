@@ -7,20 +7,30 @@ using Mina.Core.Buffer;
 using Mina.Core.Session;
 using Mina.Filter.Codec;
 using Mina.Filter.Codec.Demux;
+using Newtonsoft.Json;
 
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
     public sealed class FileHashesProtocolDecoder : IMessageDecoder
     {
+        private IList<IFileHash> _decodeMessage;
         public MessageDecoderResult Decodable(IoSession session, IoBuffer input)
         {
-            throw new NotImplementedException();
+            var type=(FunctionType)input.Get();
+            if (type==FunctionType.Update)
+            {
+                var message = input.GetString(Encoding.UTF8);
+                _decodeMessage=JsonConvert.DeserializeObject<IList<IFileHash>>(message);
+                return MessageDecoderResult.OK;
+            }
+            return MessageDecoderResult.NotOK;
         }
 
         public MessageDecoderResult Decode(IoSession session, IoBuffer input, IProtocolDecoderOutput output)
         {
             // TODO Client->Server 所有文件的校验值
-            throw new NotImplementedException();
+            output.Write(_decodeMessage);
+            return MessageDecoderResult.OK;
         }
 
         public void FinishDecode(IoSession session, IProtocolDecoderOutput output)
