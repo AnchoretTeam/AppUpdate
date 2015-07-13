@@ -57,5 +57,10 @@ namespace AppUpdate.Core
             }
             return true;
         }
+
+        internal static void HolyShit()
+        {
+            Console.WriteLine("Holy Shit!");
+        }
     }
 }
