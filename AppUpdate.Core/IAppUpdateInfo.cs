@@ -18,6 +18,4 @@ namespace AppUpdate.Core
         public string AppBranchID { get; set; }
         //...
     }
-
-    public interface 
 }

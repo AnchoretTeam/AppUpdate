@@ -3,6 +3,18 @@ using System.Collections.Generic;
 
 namespace AppUpdate.Core
 {
+    public interface ITransferingZipFile
+    {
+        /// <summary>
+        /// 压缩文件大小
+        /// </summary>
+        long FileSize { get; set; }
+        /// <summary>
+        /// 压缩文件希哈值
+        /// </summary>
+        byte[] HashBytes { get; set; }
+        void UnZip();
+    }
     /// <summary>
     ///  更新文件集合类
     /// </summary>
