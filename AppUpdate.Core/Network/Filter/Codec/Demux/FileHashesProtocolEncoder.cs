@@ -17,7 +17,7 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
             var buffer = IoBuffer.Allocate(30);
             buffer.AutoExpand = true;
             //写代码
-            buffer.Put((byte) FunctionType.Update);
+            buffer.Put((byte) MessageType.Update_FileHash);
             buffer.PutString(JsonConvert.SerializeObject(message),Encoding.UTF8);
             buffer.Flip();
             output.Write(buffer);
@@ -29,10 +29,4 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
         }
     }
 
-    public enum FunctionType:byte
-    {
-        Update,
-        Register
-    }
- 
 }
