@@ -59,6 +59,7 @@
     <Compile Include="FileHashHelper.cs" />
     <Compile Include="IFileHash.cs" />
     <Compile Include="IAppUpdateInfo.cs" />
+    <Compile Include="ITransferingZipFileInfo.cs" />
     <Compile Include="IUpdateFileCollection.cs" />
     <Compile Include="MessageType.cs" />
     <Compile Include="Network\Filter\Codec\Demux\UpdateFileCollectionProtocolDecoder.cs" />

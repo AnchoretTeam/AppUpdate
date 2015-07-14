@@ -11,12 +11,14 @@ using Newtonsoft.Json;
 
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
+    /// <summary>
+    /// [由Client解码]Server发给Client升级文件信息，包含要升级文件的名称
+    /// </summary>
     public sealed class UpdateFileCollectionProtocolEncoder : IMessageEncoder<IUpdateFileCollection>
     {
-
         public void Encode(IoSession session, IUpdateFileCollection message, IProtocolEncoderOutput output)
         {
-            IoBuffer buffer = IoBuffer.Allocate(30);
+            var buffer = IoBuffer.Allocate(30);
             buffer.AutoExpand = true;
             buffer.Put((byte)MessageType.Update_UpdateFileCollection);
             buffer.PutString(JsonConvert.SerializeObject(message), Encoding.UTF8);

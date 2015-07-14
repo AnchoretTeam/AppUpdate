@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mina.Filter.Codec.Demux;
-using Mina.Core.Session;
+﻿using System.Text;
 using Mina.Core.Buffer;
+using Mina.Core.Session;
 using Mina.Filter.Codec;
+using Mina.Filter.Codec.Demux;
 using Newtonsoft.Json;
 
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
-    class UpdateFileCollectionProtocolDecoder:IMessageDecoder
+    /// <summary>
+    /// [由Server编码]Server发给Client升级文件信息，包含要升级文件的名称
+    /// </summary>
+    public sealed class UpdateFileCollectionProtocolDecoder : IMessageDecoder
     {
         private IUpdateFileCollection _decodeMessage;
-        public MessageDecoderResult Decodable(IoSession session,IoBuffer input)
+        public MessageDecoderResult Decodable(IoSession session, IoBuffer input)
         {
-            var type=(MessageType)input.Get();
+            var type = (MessageType)input.Get();
             if (type == MessageType.Update_UpdateFileCollection)
             {
-                var message=input.GetString(Encoding.UTF8);
-                _decodeMessage=JsonConvert.DeserializeObject<IUpdateFileCollection>(message);
+                var message = input.GetString(Encoding.UTF8);
+                _decodeMessage = JsonConvert.DeserializeObject<IUpdateFileCollection>(message);
                 return MessageDecoderResult.OK;
             }
             return MessageDecoderResult.NotOK;
         }
 
-        public MessageDecoderResult Decode(IoSession session, IoBuffer input, Mina.Filter.Codec.IProtocolDecoderOutput output)
+        public MessageDecoderResult Decode(IoSession session, IoBuffer input, IProtocolDecoderOutput output)
         {
             output.Write(_decodeMessage);
             return MessageDecoderResult.OK;

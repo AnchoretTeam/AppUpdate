@@ -11,6 +11,9 @@ using Newtonsoft.Json;
 
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
+    /// <summary>
+    /// [由Server解码]Client发给Server所有文件的校验值
+    /// </summary>
     public sealed class FileHashesProtocolDecoder : IMessageDecoder
     {
         private IList<IFileHash> _decodeMessage;
