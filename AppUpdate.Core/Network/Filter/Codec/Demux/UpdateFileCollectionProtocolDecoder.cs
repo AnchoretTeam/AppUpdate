@@ -20,7 +20,7 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
             if (type == MessageType.Update_UpdateFileCollection)
             {
                 var message=input.GetString(Encoding.UTF8);
-                var _decodeMessage=JsonConvert.DeserializeObject<IUpdateFileCollection>(message);
+                _decodeMessage=JsonConvert.DeserializeObject<IUpdateFileCollection>(message);
                 return MessageDecoderResult.OK;
             }
             return MessageDecoderResult.NotOK;
