@@ -5,7 +5,7 @@
         Update_FileHash,
         Update_UpdateFileCollection,
         Update_MachineId,
-        Update_Files,
+        Update_ZipFiles,
         Register
     }
 }
