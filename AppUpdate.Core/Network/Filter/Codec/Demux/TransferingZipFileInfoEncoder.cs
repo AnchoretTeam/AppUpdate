@@ -22,13 +22,11 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
             buffer.AutoExpand = true;
 
             buffer.Put((byte)MessageType.Update_ZipFiles);
-            byte[] bytes=new byte[1024];
-            using (MemoryStream ms=new MemoryStream(bytes))
+            using (MemoryStream ms=new MemoryStream())
             {
                 string fileInfo = JsonConvert.SerializeObject(message.ZippingFiles(ms));
                 buffer.PutString(fileInfo, Encoding.UTF8);
                 buffer.Put(ms.ToArray());
-
                 buffer.Flip();
                 output.Write(buffer);
             }

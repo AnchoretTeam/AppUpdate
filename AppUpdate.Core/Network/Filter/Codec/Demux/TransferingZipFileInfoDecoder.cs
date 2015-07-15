@@ -25,7 +25,7 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
                 var filesBytes=input.GetRemaining().Array;
                 if (fileSize==filesBytes.Length)
                 {
-                    if (hashBytes==FileHashHelper.ComputeFileHash(filesBytes))
+                    if (FileHashHelper.CompareHashValue(FileHashHelper.ComputeFileHash(filesBytes),hashBytes))
                     {
                         return MessageDecoderResult.OK;
                     }
