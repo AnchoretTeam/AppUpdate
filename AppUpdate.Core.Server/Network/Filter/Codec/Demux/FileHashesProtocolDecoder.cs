@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using Mina.Core.Buffer;
 using Mina.Core.Session;
 using Mina.Filter.Codec;
@@ -38,7 +35,6 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
 
         public void FinishDecode(IoSession session, IProtocolDecoderOutput output)
         {
-            return;
         }
     }
 }

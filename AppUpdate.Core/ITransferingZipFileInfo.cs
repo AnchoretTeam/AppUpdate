@@ -16,14 +16,8 @@ namespace AppUpdate.Core
         byte[] HashBytes { get; set; }
     }
 
-    public interface IFilesList
+    public interface ITransferingZipFile:IList<string>
     {
-        /// <summary>
-        /// 需要压缩文件列表
-        /// </summary>
-        List<string> FilesList { get; set; }
-
         ITransferingZipFileInfo ZippingFiles(Stream output);
-
     }
 }

@@ -33,7 +33,6 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
 
         public void FinishDecode(IoSession session, IProtocolDecoderOutput output)
         {
-            return;
         }
     }
 }
