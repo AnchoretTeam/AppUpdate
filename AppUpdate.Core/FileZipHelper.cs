@@ -10,6 +10,11 @@ namespace AppUpdate.Core
 {
     internal static class FileZipHelper
     {
+        /// <summary>
+        /// 压缩文件
+        /// </summary>
+        /// <param name="directoryInfo">目录信息</param>
+        /// <returns>压缩文件流</returns>
         internal static Stream ZippingFiles(string directoryInfo)
         {
             using (var ms = new MemoryStream())
@@ -78,6 +83,11 @@ namespace AppUpdate.Core
                     stack.Push(directory);
                 }
             } while (stack.Count>0);
+        }
+
+        internal static void UnZippingFiles(byte[] zippingBytes,string extractPath)
+        {
+            
         }
 
     }
