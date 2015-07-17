@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 
 namespace AppUpdate.ViewModel
@@ -30,5 +31,17 @@ namespace AppUpdate.ViewModel
             ////    // Code runs "for real"
             ////}
         }
+
+        #region Logs
+
+        private ObservableCollection<string> _logs = new ObservableCollection<string>();
+
+        public ObservableCollection<string> Logs
+        {
+            get { return _logs; }
+        }
+
+        #endregion
+
     }
 }
