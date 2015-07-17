@@ -61,6 +61,7 @@
     <Compile Include="Network\Filter\Codec\Demux\TransferingZipFileEncoder.cs" />
     <Compile Include="Network\Filter\Codec\Demux\UpdateFileCollectionProtocolEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransferingZipFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppUpdate.Core\AppUpdate.Core.csproj">

@@ -18,8 +18,7 @@ namespace AppUpdate.Core
 
     public interface ITransferingZipFile
     {
-        string AppDirectory { get; set; }
-        byte[] TrasferingZipBytes { get; set; }
-        ITransferingZipFileInfo ZippingFiles();
+        byte[] ZipBytes { get; }
+        ITransferingZipFileInfo ZipFileInfo { get; }
     }
 }

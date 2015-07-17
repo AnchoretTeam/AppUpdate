@@ -15,16 +15,13 @@ namespace AppUpdate.Core
         /// </summary>
         /// <param name="dirInfo">需要更新文件目录</param>
         /// <returns>压缩文件流</returns>
-        internal static Stream ZippingUpdateFiles(string dirInfo)
+        internal static void ZippingFiles(string dirInfo, Stream output)
         {
-            using (MemoryStream ms = new MemoryStream())
+            using (ZipArchive archive = new ZipArchive(output, ZipArchiveMode.Create))
             {
-                using (ZipArchive archive = new ZipArchive(ms, ZipArchiveMode.Create))
-                {
-                    ZipInternalIteration(archive, dirInfo);
-                }
-                return ms;
+                ZipInternalIteration(archive, dirInfo);
             }
+
         }
         /// <summary>
         /// 解压文件
@@ -33,7 +30,7 @@ namespace AppUpdate.Core
         /// <param name="input">压缩文件数据</param>
         internal static void UnZippingFiles(string dirPath, byte[] input)
         {
-            //备份文件
+            //备份文件到dirPath下Backup文件夹下
             ZippingBackupFiles(dirPath, dirPath + "Backup\\");
             //覆盖文件
             using (var zipStream = new MemoryStream(input))//将压缩文件信息初始化到内存流
@@ -76,7 +73,7 @@ namespace AppUpdate.Core
             {
                 Directory.CreateDirectory(backupDir);
             }
-            var upperFolderName = Path.GetFileName(appDir.TrimEnd(new char[] { '\\' }));
+            var upperFolderName = Path.GetFileName(appDir.TrimEnd('\\'));
             var zipFileName = new StringBuilder("backup").Append(upperFolderName).Append("_").Append(DateTime.Now.ToShortDateString().Replace("/", String.Empty)).Append(".zip").ToString();
             using (FileStream ms = File.Create(backupDir + zipFileName))
             {
