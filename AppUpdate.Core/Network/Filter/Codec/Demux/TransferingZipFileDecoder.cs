@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using Mina.Core.Buffer;
 using Mina.Core.Session;
@@ -10,33 +9,6 @@ using Newtonsoft.Json;
 
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
-    public sealed class TransferingZipFileInfo : ITransferingZipFileInfo
-    {
-        public long FileSize { get; set; }
-        public byte[] HashBytes { get; set; }
-    }
-
-    public sealed class TransferingZipFile :  ITransferingZipFile
-    {
-        public TransferingZipFile(){}
-        public TransferingZipFile(string transferingZipDir)
-        {
-            AppDirectory = transferingZipDir;
-        }
-        public string AppDirectory { get; set; }
-        public byte[] TrasferingZipBytes { get; set; }
-
-        public ITransferingZipFileInfo ZippingFiles()
-        {
-            var output= FileZipHelper.ZippingUpdateFiles(AppDirectory);
-            TrasferingZipBytes = ((MemoryStream) output).ToArray();
-            var zipFileInfo=new TransferingZipFileInfo();
-            zipFileInfo.FileSize = TrasferingZipBytes.Length;
-            zipFileInfo.HashBytes = FileHashHelper.ComputeFileHash(output);
-            return zipFileInfo;
-        }
-    }
-
     /// <summary>
     /// [由Client解码]Server发给Client升级文件压缩包，包含要升级的所有文件
     /// </summary>
@@ -49,7 +21,6 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
             {
                 return MessageDecoderResult.NotOK;
             }
-            _zipFileInfoMessage = new TransferingZipFile();
 
             var zipFileInfo = JsonConvert.DeserializeObject<TransferingZipFileInfo>(input.GetString(Encoding.UTF8));
             var fileSize = zipFileInfo.FileSize;
@@ -64,7 +35,7 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
 
             if (FileHashHelper.CompareHashValue(FileHashHelper.ComputeFileHash(filesBytes), hashBytes))
             {
-                 _zipFileInfoMessage.TrasferingZipBytes = filesBytes;
+                _zipFileInfoMessage = new TransferingZipFile(filesBytes);
                 return MessageDecoderResult.OK;
             }
             return MessageDecoderResult.NotOK;

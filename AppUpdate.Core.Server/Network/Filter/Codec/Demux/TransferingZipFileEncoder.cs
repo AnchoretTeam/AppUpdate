@@ -19,9 +19,9 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
             buffer.AutoExpand = true;
 
             buffer.Put((byte)MessageType.Update_ZipFiles);
-            var zipFileInfo = message.ZippingFiles();
+            var zipFileInfo = message.ZipFileInfo;
             buffer.PutString(JsonConvert.SerializeObject(zipFileInfo), Encoding.UTF8);
-            buffer.Put(message.TrasferingZipBytes);
+            buffer.Put(message.ZipBytes);
             buffer.Flip();
             output.Write(buffer);
         }
