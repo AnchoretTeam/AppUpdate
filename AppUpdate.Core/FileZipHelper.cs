@@ -11,83 +11,149 @@ namespace AppUpdate.Core
     internal static class FileZipHelper
     {
         /// <summary>
-        /// 压缩文件
+        /// 压缩更新文件
         /// </summary>
-        /// <param name="directoryInfo">目录信息</param>
+        /// <param name="dirInfo">需要更新文件目录</param>
         /// <returns>压缩文件流</returns>
-        internal static Stream ZippingFiles(string directoryInfo)
+        internal static Stream ZippingUpdateFiles(string dirInfo)
         {
-            using (var ms = new MemoryStream())
+            using (MemoryStream ms = new MemoryStream())
             {
-                using (var archive = new ZipArchive(ms, ZipArchiveMode.Create))
+                using (ZipArchive archive = new ZipArchive(ms, ZipArchiveMode.Create))
                 {
-                    ZippingInternalIteration(archive,directoryInfo);
+                    ZipInternalIteration(archive, dirInfo);
                 }
                 return ms;
             }
         }
         /// <summary>
-        /// 压缩文件（递归调用）
+        /// 解压文件
         /// </summary>
-        /// <param name="archive">ZipArchive</param>
-        /// <param name="directoryInfo">目录信息</param>
-        private static void ZippingInternalRecursive(ZipArchive archive, string directoryInfo)
+        /// <param name="dirPath">要解压到的路径</param>
+        /// <param name="input">压缩文件数据</param>
+        internal static void UnZippingFiles(string dirPath, byte[] input)
         {
-            var files = Directory.GetFiles(directoryInfo);
+            //备份文件
+            ZippingBackupFiles(dirPath, dirPath + "Backup\\");
+            //覆盖文件
+            using (var zipStream = new MemoryStream(input))//将压缩文件信息初始化到内存流
+            {
+                using (var source = new ZipArchive(zipStream, ZipArchiveMode.Read))//读取压缩文件
+                {
+                    foreach (var entry in source.Entries)
+                    {
+                        string fullPath = Path.GetFullPath(dirPath + entry.FullName);
+                        if (fullPath.EndsWith("\\"))
+                        {
+                            if (!Directory.Exists(fullPath))
+                            {
+                                Directory.CreateDirectory(fullPath);
+                            }
+                        }
+                        else
+                        {
+                            using (var stream = entry.Open())
+                            {
+                                using (FileStream fileStream = File.Open(fullPath, FileMode.Create))
+                                {
+                                    stream.CopyTo(fileStream);
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        /// <summary>
+        /// 压缩备份文件
+        /// </summary>
+        /// <param name="appDir">app程序路径</param>
+        /// <param name="backupDir">备份程序路径</param>
+        private static void ZippingBackupFiles(string appDir, string backupDir)
+        {
+            if (!Directory.Exists(backupDir))
+            {
+                Directory.CreateDirectory(backupDir);
+            }
+            var upperFolderName = Path.GetFileName(appDir.TrimEnd(new char[] { '\\' }));
+            var zipFileName = new StringBuilder("backup").Append(upperFolderName).Append("_").Append(DateTime.Now.ToShortDateString().Replace("/", String.Empty)).Append(".zip").ToString();
+            using (FileStream ms = File.Create(backupDir + zipFileName))
+            {
+                using (ZipArchive archive = new ZipArchive(ms, ZipArchiveMode.Create))
+                {
+                    ZipInternalIteration(archive, appDir);
+                }
+            }
+        }
+        /// <summary>
+        /// 压缩文件（递归）
+        /// </summary>
+        /// <param name="archive">压缩文件类</param>
+        /// <param name="dirInfo">需要更新文件目录</param>
+        private static void ZipInternalRecursive(ZipArchive archive, string dirInfo)
+        {
+            var files = Directory.GetFiles(dirInfo);
+            var uperDir = dirInfo;
             foreach (var file in files)
             {
-                var entry = archive.CreateEntry(directoryInfo, CompressionLevel.Optimal);
-                using (var stream = entry.Open())
+                var fileEntry = archive.CreateEntry(file.Substring(uperDir.Length), CompressionLevel.Optimal);
+                using (var s = fileEntry.Open())
                 {
                     using (var fs = new FileStream(file, FileMode.Open))
                     {
-                        fs.CopyTo(stream);
+                        fs.CopyTo(s);
                     }
                 }
             }
-            var directores = Directory.GetDirectories(directoryInfo);
-            foreach (var directory in directores)
+
+            var subDirs = Directory.GetDirectories(dirInfo);
+            foreach (var directoryInfo in subDirs)
             {
-                archive.CreateEntry(directory + "\\", CompressionLevel.NoCompression);
-                ZippingInternalRecursive(archive, directory);
+                if (!Path.GetFileName(directoryInfo).Equals("Backup"))
+                {
+                    var subFolder = directoryInfo + "\\";
+                    archive.CreateEntry(subFolder.Substring(uperDir.Length), CompressionLevel.NoCompression);
+                    ZipInternalRecursive(archive, directoryInfo);
+                }
             }
         }
         /// <summary>
         /// 压缩文件（迭代）
         /// </summary>
-        /// <param name="archive">ZipArchive</param>
-        /// <param name="directoryInfo">目录信息</param>
-        private static void ZippingInternalIteration(ZipArchive archive, string directoryInfo)
+        /// <param name="archive">压缩文件类</param>
+        /// <param name="dirInfo">需要更新文件目录</param>
+        private static void ZipInternalIteration(ZipArchive archive, string dirInfo)
         {
-            var stack=new Stack<string>();
-            stack.Push(directoryInfo);
+            var stack = new Stack<string>();
+            var uperDir = dirInfo;
+            stack.Push(dirInfo);
             do
             {
-                stack.Pop();
-                var entry = archive.CreateEntry(directoryInfo, CompressionLevel.Optimal);
-                var files = Directory.GetFiles(directoryInfo);
+                dirInfo = stack.Pop();
+                var files = Directory.GetFiles(dirInfo);
                 foreach (var file in files)
                 {
-                    using (var stream=entry.Open())
+                    var fileEntry = archive.CreateEntry(file.Substring(uperDir.Length), CompressionLevel.Optimal);
+                    using (var s = fileEntry.Open())
                     {
-                        using (var fs=new FileStream(file,FileMode.Open))
+                        using (var fs = new FileStream(file, FileMode.Open))
                         {
-                            fs.CopyTo(stream);
+                            fs.CopyTo(s);
                         }
                     }
                 }
-                var directories = Directory.GetDirectories(directoryInfo);
-                foreach (var directory in directories)
+                var subDirs = Directory.GetDirectories(dirInfo);
+                foreach (var directoryInfo in subDirs)
                 {
-                    archive.CreateEntry(directory+"\\",CompressionLevel.NoCompression);
-                    stack.Push(directory);
+                    if (!Path.GetFileName(directoryInfo).Equals("Backup"))
+                    {
+                        var subFolder = directoryInfo + "\\";
+                        archive.CreateEntry(subFolder.Substring(uperDir.Length), CompressionLevel.NoCompression);
+                        stack.Push(subFolder);
+                    }
                 }
-            } while (stack.Count>0);
-        }
-
-        internal static void UnZippingFiles(byte[] zippingBytes,string extractPath)
-        {
-            
+            } while (stack.Count > 0);
         }
 
     }

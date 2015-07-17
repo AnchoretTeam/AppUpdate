@@ -16,12 +16,24 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
         public byte[] HashBytes { get; set; }
     }
 
-    public sealed class TransferingZipFile : List<string>, ITransferingZipFile
+    public sealed class TransferingZipFile :  ITransferingZipFile
     {
-        public byte[] ZipFileBytes { get; set; }
-        public ITransferingZipFileInfo ZippingFiles(Stream output)
+        public TransferingZipFile(){}
+        public TransferingZipFile(string transferingZipDir)
         {
-            throw new NotImplementedException();
+            AppDirectory = transferingZipDir;
+        }
+        public string AppDirectory { get; set; }
+        public byte[] TrasferingZipBytes { get; set; }
+
+        public ITransferingZipFileInfo ZippingFiles()
+        {
+            var output= FileZipHelper.ZippingUpdateFiles(AppDirectory);
+            TrasferingZipBytes = ((MemoryStream) output).ToArray();
+            var zipFileInfo=new TransferingZipFileInfo();
+            zipFileInfo.FileSize = TrasferingZipBytes.Length;
+            zipFileInfo.HashBytes = FileHashHelper.ComputeFileHash(output);
+            return zipFileInfo;
         }
     }
 
@@ -52,7 +64,7 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
 
             if (FileHashHelper.CompareHashValue(FileHashHelper.ComputeFileHash(filesBytes), hashBytes))
             {
-                ((TransferingZipFile) _zipFileInfoMessage).ZipFileBytes = filesBytes;
+                 _zipFileInfoMessage.TrasferingZipBytes = filesBytes;
                 return MessageDecoderResult.OK;
             }
             return MessageDecoderResult.NotOK;

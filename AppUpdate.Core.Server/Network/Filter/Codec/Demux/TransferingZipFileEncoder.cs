@@ -13,21 +13,17 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
     /// </summary>
     public sealed class TransferingZipFileEncoder : IMessageEncoder<ITransferingZipFile>
     {
-
         public void Encode(IoSession session, ITransferingZipFile message, IProtocolEncoderOutput output)
         {
             var buffer = IoBuffer.Allocate(30);
             buffer.AutoExpand = true;
 
             buffer.Put((byte)MessageType.Update_ZipFiles);
-            using (var ms = new MemoryStream())
-            {
-                var fileInfo = message.ZippingFiles(ms);
-                buffer.PutString(JsonConvert.SerializeObject(fileInfo), Encoding.UTF8);
-                buffer.Put(ms.ToArray());
-                buffer.Flip();
-                output.Write(buffer);
-            }
+            var zipFileInfo = message.ZippingFiles();
+            buffer.PutString(JsonConvert.SerializeObject(zipFileInfo), Encoding.UTF8);
+            buffer.Put(message.TrasferingZipBytes);
+            buffer.Flip();
+            output.Write(buffer);
         }
 
         public void Encode(IoSession session, object message, IProtocolEncoderOutput output)

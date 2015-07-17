@@ -16,8 +16,10 @@ namespace AppUpdate.Core
         byte[] HashBytes { get; set; }
     }
 
-    public interface ITransferingZipFile:IList<string>
+    public interface ITransferingZipFile
     {
-        ITransferingZipFileInfo ZippingFiles(Stream output);
+        string AppDirectory { get; set; }
+        byte[] TrasferingZipBytes { get; set; }
+        ITransferingZipFileInfo ZippingFiles();
     }
 }
