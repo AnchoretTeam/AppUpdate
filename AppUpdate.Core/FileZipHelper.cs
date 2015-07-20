@@ -73,7 +73,7 @@ namespace AppUpdate.Core
             }
             var upperFolderName = Path.GetFileName(appDir.TrimEnd('\\'));
             var zipFileName = new StringBuilder("backup").Append(upperFolderName).Append("_").Append(DateTime.Now.ToShortDateString().Replace("/", String.Empty)).Append(".zip").ToString();
-            using (FileStream ms = File.Create(backupDir + zipFileName))
+            using (var ms = File.Create(backupDir + zipFileName))
             {
                 using (ZipArchive archive = new ZipArchive(ms, ZipArchiveMode.Create))
                 {
