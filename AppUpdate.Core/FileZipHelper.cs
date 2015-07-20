@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AppUpdate.Core
 {
@@ -51,7 +49,7 @@ namespace AppUpdate.Core
                         {
                             using (var stream = entry.Open())
                             {
-                                using (var fileStream = File.Open(fullPath, FileMode.Create))
+                                using (FileStream fileStream = File.Open(fullPath, FileMode.Create))
                                 {
                                     stream.CopyTo(fileStream);
                                 }

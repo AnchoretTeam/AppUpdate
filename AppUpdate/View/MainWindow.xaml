@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppUpdate"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="AppUpdate" Height="350" Width="525">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="70*"/>
+        </Grid.RowDefinitions>
+        <ListBox Grid.Row="1" ItemsSource="{Binding Logs}"/>
+        <Button Content="检查更新" HorizontalAlignment="Left" Margin="432,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="应用更新" HorizontalAlignment="Left" Margin="432,34,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock HorizontalAlignment="Left" Margin="50,29,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
     </Grid>
 </Window>
