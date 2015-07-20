@@ -51,7 +51,7 @@ namespace AppUpdate.Core
                         {
                             using (var stream = entry.Open())
                             {
-                                using (FileStream fileStream = File.Open(fullPath, FileMode.Create))
+                                using (var fileStream = File.Open(fullPath, FileMode.Create))
                                 {
                                     stream.CopyTo(fileStream);
                                 }

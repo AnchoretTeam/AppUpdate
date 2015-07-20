@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAppUpdateInfo.cs" />
+    <Compile Include="Network\Filter\Codec\Demux\AppUpdateInfoDecoder.cs" />
     <Compile Include="Network\Filter\Codec\Demux\FileHashesProtocolDecoder.cs" />
     <Compile Include="Network\Filter\Codec\Demux\TransferingZipFileEncoder.cs" />
     <Compile Include="Network\Filter\Codec\Demux\UpdateFileCollectionProtocolEncoder.cs" />

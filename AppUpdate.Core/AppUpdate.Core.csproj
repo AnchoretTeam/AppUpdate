@@ -64,6 +64,7 @@
     <Compile Include="ITransferingZipFileInfo.cs" />
     <Compile Include="IUpdateFileCollection.cs" />
     <Compile Include="MessageType.cs" />
+    <Compile Include="Network\Filter\Codec\Demux\AppUpdateInfoEncoder.cs" />
     <Compile Include="TransferingZipFile.cs" />
     <Compile Include="Network\Filter\Codec\Demux\TransferingZipFileDecoder.cs" />
     <Compile Include="TransferingZipFileInfo.cs" />

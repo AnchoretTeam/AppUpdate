@@ -4,6 +4,10 @@ namespace AppUpdate.Core
 {
     public sealed class TransferingZipFile : ITransferingZipFile
     {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="zipBytes">被压缩文件字节数组</param>
         public TransferingZipFile(byte[] zipBytes)
         {
             ZipBytes = zipBytes;
