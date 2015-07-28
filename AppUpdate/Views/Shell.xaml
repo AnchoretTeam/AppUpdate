@@ -1,0 +1,30 @@
+﻿<Window x:Class="AppUpdate.Views.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mvvm="clr-namespace:Microsoft.Practices.Prism.Mvvm;assembly=Microsoft.Practices.Prism.Mvvm.Desktop"
+        mc:Ignorable="d"
+        mvvm:ViewModelLocator.AutoWireViewModel="True"
+        Title="AppUpdate" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        <Button Content="检查更新" HorizontalAlignment="Left" Margin="432,10,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CheckUpdateCommand}"/>
+        <Button Content="应用更新" HorizontalAlignment="Left" Margin="432,34,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SetupUpdateCommand}"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="更新详情" FontWeight="Bold"/>
+        <ScrollViewer Margin="10,54,106,10" >
+            <TextBlock TextWrapping="Wrap" Text="{Binding UpdateInfo}" Height="16" Width="0"/>
+        </ScrollViewer>
+        <ProgressBar HorizontalAlignment="Left" Height="19" Margin="432,58,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,11,0,0" TextWrapping="Wrap" Text="远程服务器 IP 地址" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="19" Margin="120,10,0,0" TextWrapping="Wrap" Text="{Binding RemoteIPAddress, Converter={StaticResource IPAddress2StringConverter}}" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="245,11,0,0" TextWrapping="Wrap" Text="端口" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="19" Margin="274,10,0,0" TextWrapping="Wrap" Text="{Binding RemotePort}" VerticalAlignment="Top" Width="55"/>
+        <GridSplitter Grid.Row="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Rows" ShowsPreview="True"/>
+        <ListBox Grid.Row="2" ItemsSource="{Binding Logs}"/>
+    </Grid>
+</Window>
