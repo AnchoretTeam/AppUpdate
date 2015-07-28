@@ -4,6 +4,10 @@ namespace AppUpdate.Core
 {
     public sealed class TransferingZipFile : ITransferingZipFile
     {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="appDir">压缩文件所在路径（文件夹）</param>
         public TransferingZipFile(string appDir)
         {
             using (var ms = new MemoryStream())
@@ -12,6 +16,7 @@ namespace AppUpdate.Core
                 ZipBytes = ms.ToArray();
             }
         }
+ 
         public byte[] ZipBytes { get;private set; }
         public ITransferingZipFileInfo ZipFileInfo
         {

@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace AppUpdate.Core.Network.Filter.Codec.Demux
 {
     /// <summary>
-    /// [由Client解码]Server发给Client升级文件压缩包，包含要升级的所有文件
+    /// [由Client解码]Server发给Client升级文件压缩包，包含压缩包信息
     /// </summary>
     public sealed class TransferingZipFileDecoder : IMessageDecoder
     {

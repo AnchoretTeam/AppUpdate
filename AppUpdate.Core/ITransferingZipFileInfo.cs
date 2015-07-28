@@ -18,7 +18,13 @@ namespace AppUpdate.Core
 
     public interface ITransferingZipFile
     {
+        /// <summary>
+        /// 压缩文件
+        /// </summary>
         byte[] ZipBytes { get; }
+        /// <summary>
+        /// 压缩文件信息
+        /// </summary>
         ITransferingZipFileInfo ZipFileInfo { get; }
     }
 }
