@@ -13,13 +13,17 @@
             <RowDefinition/>
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
-        <Button Content="检查更新" HorizontalAlignment="Left" Margin="432,10,0,0" VerticalAlignment="Top" Width="75" Command="{Binding CheckUpdateCommand}"/>
-        <Button Content="应用更新" HorizontalAlignment="Left" Margin="432,34,0,0" VerticalAlignment="Top" Width="75" Command="{Binding SetupUpdateCommand}"/>
+        <Button Content="检查更新" Margin="0,10,10,0" VerticalAlignment="Top" Command="{Binding CheckUpdateCommand}" HorizontalAlignment="Right" Width="75"/>
+        <Button Content="应用更新" Margin="0,34,10,0" VerticalAlignment="Top" Command="{Binding SetupUpdateCommand}" HorizontalAlignment="Right" Width="75"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="更新详情" FontWeight="Bold"/>
-        <ScrollViewer Margin="10,54,106,10" >
-            <TextBlock TextWrapping="Wrap" Text="{Binding UpdateInfo}" Height="16" Width="0"/>
-        </ScrollViewer>
-        <ProgressBar HorizontalAlignment="Left" Height="19" Margin="432,58,0,0" VerticalAlignment="Top" Width="75"/>
+        <Border Margin="10,54,106,10" 
+                BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+                BorderThickness="1">
+            <ScrollViewer>
+                <TextBlock Margin="5" TextWrapping="Wrap" Text="{Binding UpdateInfo}"/>
+            </ScrollViewer>
+        </Border>
+        <ProgressBar Height="19" Margin="0,58,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,11,0,0" TextWrapping="Wrap" Text="远程服务器 IP 地址" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Height="19" Margin="120,10,0,0" TextWrapping="Wrap" Text="{Binding RemoteIPAddress, Converter={StaticResource IPAddress2StringConverter}}" VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="245,11,0,0" TextWrapping="Wrap" Text="端口" VerticalAlignment="Top"/>

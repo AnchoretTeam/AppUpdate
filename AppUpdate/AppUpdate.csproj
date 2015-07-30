@@ -127,6 +127,7 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Converter\IPAddress2StringConverter.cs" />
+    <Compile Include="Events\UpdateFileCollectionEvent.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Page Include="Converter\Converters.xaml">
       <SubType>Designer</SubType>

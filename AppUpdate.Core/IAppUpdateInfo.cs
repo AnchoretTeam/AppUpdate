@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AppUpdate.Core
+﻿namespace AppUpdate.Core
 {
     public interface IAppUpdateInfo
     {
+        // ReSharper disable once InconsistentNaming
         string MachineID { set; get; }
+        // ReSharper disable once InconsistentNaming
         string AppBranchID { set; get; }
     }
 

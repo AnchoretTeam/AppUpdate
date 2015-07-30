@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace AppUpdate.Core
 {
     public sealed class TransferingZipFile : ITransferingZipFile
@@ -18,9 +16,11 @@ namespace AppUpdate.Core
             get
             {
                 //每次都可以获取最新的值
-                var zipFileInfo = new TransferingZipFileInfo();
-                zipFileInfo.FileSize = ZipBytes.Length;
-                zipFileInfo.HashBytes = FileHashHelper.ComputeFileHash(ZipBytes);
+                var zipFileInfo = new TransferingZipFileInfo
+                {
+                    FileSize = ZipBytes.Length,
+                    HashBytes = FileHashHelper.ComputeFileHash(ZipBytes)
+                };
                 return zipFileInfo;
             }
         }

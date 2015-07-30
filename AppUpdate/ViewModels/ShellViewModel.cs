@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using AppUpdate.Core;
 using AppUpdate.Core.Network.Filter.Codec.Demux;
+using AppUpdate.Events;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.PubSubEvents;
+using Microsoft.Practices.ServiceLocation;
 using Mina.Core.Service;
 using Mina.Filter.Codec;
 using Mina.Filter.Codec.Demux;
@@ -31,36 +34,41 @@ namespace AppUpdate.ViewModels
     /// </summary>
     public class ShellViewModel : BindableBase
     {
-        public IoConnector _connector;
+        private readonly IEventAggregator _aggregator;
+        private readonly IoConnector _connector;
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public ShellViewModel()
         {
+            //è·å–äº‹ä»¶èšåˆå™¨  
+            _aggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            _aggregator.GetEvent<UpdateFileCollectionEvent>().Subscribe(updateFileCollection =>
+            {
+                UpdateInfo = $"æ›´æ–°åŒ…ç¼–è¯‘æ—¥æœŸï¼š{updateFileCollection.ReleaseTime}\r\næ›´æ–°å†…å®¹ï¼š{updateFileCollection.Description}";
+            });
+
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 // Code runs in Blend --> create design time data.
             }
             else
             {
-                var demuxingCodec = new DemuxingProtocolCodecFactory();
-                demuxingCodec.AddMessageEncoder<IList<IFileHash>, FileHashesProtocolEncoder>();
-
-                _connector = new AsyncSocketConnector();
-                _connector.FilterChain.AddLast("logger", new LoggingFilter());
-                _connector.FilterChain.AddLast("codec", new ProtocolCodecFilter(demuxingCodec));
-                //_connector.Connect(new IPEndPoint(RemoteIPAddress, RemotePort));
+                //è·å–Socket
+                _connector = ServiceLocator.Current.GetInstance<IoConnector>();
             }
         }
 
         #region  RemoteIPAddress
 
+        // ReSharper disable once InconsistentNaming
         private IPAddress _remoteIPAddress = IPAddress.Loopback;
 
         /// <summary>
-        /// »ñÈ¡»òÉèÖÃ RemoteIPAddress ÊôĞÔ.
-        /// ĞŞ¸ÄÊôĞÔÖµ»á´¥·¢ PropertyChanged ÊÂ¼ş. 
+        /// è·å–æˆ–è®¾ç½® RemoteIPAddress å±æ€§.
+        /// ä¿®æ”¹å±æ€§å€¼ä¼šè§¦å‘ PropertyChanged äº‹ä»¶. 
         /// </summary>
+        // ReSharper disable once InconsistentNaming
         public IPAddress RemoteIPAddress
         {
             get { return _remoteIPAddress; }
@@ -74,8 +82,8 @@ namespace AppUpdate.ViewModels
         private int _remotePort = 2001;
 
         /// <summary>
-        /// »ñÈ¡»òÉèÖÃ RemotePort ÊôĞÔ.
-        /// ĞŞ¸ÄÊôĞÔÖµ»á´¥·¢ PropertyChanged ÊÂ¼ş. 
+        /// è·å–æˆ–è®¾ç½® RemotePort å±æ€§.
+        /// ä¿®æ”¹å±æ€§å€¼ä¼šè§¦å‘ PropertyChanged äº‹ä»¶. 
         /// </summary>
         public int RemotePort
         {
@@ -90,8 +98,8 @@ namespace AppUpdate.ViewModels
         private ObservableCollection<string> _logs = new ObservableCollection<string>();
 
         /// <summary>
-        /// »ñÈ¡»òÉèÖÃ Logs ÊôĞÔ.
-        /// ĞŞ¸ÄÊôĞÔÖµ»á´¥·¢ PropertyChanged ÊÂ¼ş. 
+        /// è·å–æˆ–è®¾ç½® Logs å±æ€§.
+        /// ä¿®æ”¹å±æ€§å€¼ä¼šè§¦å‘ PropertyChanged äº‹ä»¶. 
         /// </summary>
         public ObservableCollection<string> Logs
         {
@@ -101,13 +109,29 @@ namespace AppUpdate.ViewModels
 
         #endregion
 
-        #region  UpdateInfo
+        #region  IsBusy
 
-        private string _updateInfo = "Çë¼ì²é¸üĞÂ...";
+        private bool _isBusy = false;
 
         /// <summary>
-        /// »ñÈ¡»òÉèÖÃ UpdateInfo ÊôĞÔ.
-        /// ĞŞ¸ÄÊôĞÔÖµ»á´¥·¢ PropertyChanged ÊÂ¼ş. 
+        /// è·å–æˆ–è®¾ç½® IsBusy å±æ€§.
+        /// ä¿®æ”¹å±æ€§å€¼ä¼šè§¦å‘ PropertyChanged äº‹ä»¶. 
+        /// </summary>
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { SetProperty(ref _isBusy, value); }
+        }
+
+        #endregion
+
+        #region  UpdateInfo
+
+        private string _updateInfo = "è¯·æ£€æŸ¥æ›´æ–°...";
+
+        /// <summary>
+        /// è·å–æˆ–è®¾ç½® UpdateInfo å±æ€§.
+        /// ä¿®æ”¹å±æ€§å€¼ä¼šè§¦å‘ PropertyChanged äº‹ä»¶. 
         /// </summary>
         public string UpdateInfo
         {
@@ -122,8 +146,8 @@ namespace AppUpdate.ViewModels
         private bool _updateInfoChecked = false;
 
         /// <summary>
-        /// »ñÈ¡»òÉèÖÃ UpdateInfoChecked ÊôĞÔ.
-        /// ĞŞ¸ÄÊôĞÔÖµ»á´¥·¢ PropertyChanged ÊÂ¼ş. 
+        /// è·å–æˆ–è®¾ç½® UpdateInfoChecked å±æ€§.
+        /// ä¿®æ”¹å±æ€§å€¼ä¼šè§¦å‘ PropertyChanged äº‹ä»¶. 
         /// </summary>
         public bool UpdateInfoChecked
         {
@@ -136,12 +160,12 @@ namespace AppUpdate.ViewModels
         #region CheckUpdateCommand
 
         /// <summary>
-        ///  <see cref="CheckUpdateCommand" /> ÃüÁîµÄÃû³Æ.
+        ///  <see cref="CheckUpdateCommand" /> å‘½ä»¤çš„åç§°.
         /// </summary>
         private DelegateCommand _checkUpdateCommand;
 
         /// <summary>
-        /// »ñÈ¡ CheckUpdateCommand ÃüÁî.
+        /// è·å– CheckUpdateCommand å‘½ä»¤.
         /// </summary>
         public DelegateCommand CheckUpdateCommand
         {
@@ -154,7 +178,7 @@ namespace AppUpdate.ViewModels
 
         private bool CanCheckUpdateCommandExecute()
         {
-            return true;
+            return !IsBusy;
         }
 
         private Task CheckUpdateCommandExecute()
@@ -163,11 +187,27 @@ namespace AppUpdate.ViewModels
             {
                 return null;
             }
-            //TODO Ìí¼ÓCheckUpdateCommandÃüÁîµÄExecute´úÂë.
-            UpdateInfoChecked = true;
+            IsBusy = true;
+            CheckUpdateCommand.RaiseCanExecuteChanged();
+            SetupUpdateCommand.RaiseCanExecuteChanged();
+            UpdateInfo = "æ­£åœ¨æ£€æŸ¥æ›´æ–°...";
+            //TODO æ·»åŠ CheckUpdateCommandå‘½ä»¤çš„Executeä»£ç .
             return Task.Run(() =>
             {
-                throw new NotImplementedException();
+                var future = _connector.Connect(new IPEndPoint(RemoteIPAddress, RemotePort));
+                future.Await(5000);
+                if (!future.Connected)
+                {
+                    UpdateInfo = $"é”™è¯¯ï¼æ£€æŸ¥æ›´æ–°å¤±è´¥ï¼\r\n\r\nå¼‚å¸¸ä¿¡æ¯å¦‚ä¸‹ï¼š\r\n{future.Exception}";
+                    return;
+                }
+                future.Session.Write(new AppUpdateInfo {AppBranchID = "AppBranchID", MachineID = "MachineID"});
+                UpdateInfoChecked = true;
+            }).ContinueWith(t =>
+            {
+                IsBusy = false;
+                CheckUpdateCommand.RaiseCanExecuteChanged();
+                SetupUpdateCommand.RaiseCanExecuteChanged();
             });
         }
 
@@ -176,12 +216,12 @@ namespace AppUpdate.ViewModels
         #region SetupUpdateCommand
 
         /// <summary>
-        ///  <see cref="SetupUpdateCommand" /> ÃüÁîµÄÃû³Æ.
+        ///  <see cref="SetupUpdateCommand" /> å‘½ä»¤çš„åç§°.
         /// </summary>
         private DelegateCommand _setupUpdateCommand;
 
         /// <summary>
-        /// »ñÈ¡ SetupUpdateCommand ÃüÁî.
+        /// è·å– SetupUpdateCommand å‘½ä»¤.
         /// </summary>
         public DelegateCommand SetupUpdateCommand
         {
@@ -194,7 +234,7 @@ namespace AppUpdate.ViewModels
 
         private bool CanSetupUpdateCommandExecute()
         {
-            return true;
+            return UpdateInfoChecked && !IsBusy;
         }
 
         private Task SetupUpdateCommandExecute()
@@ -203,7 +243,7 @@ namespace AppUpdate.ViewModels
             {
                 return null;
             }
-            //TODO Ìí¼ÓSetupUpdateCommandÃüÁîµÄExecute´úÂë.
+            //TODO æ·»åŠ SetupUpdateCommandå‘½ä»¤çš„Executeä»£ç .
             return Task.Run(() =>
             {
                 throw new NotImplementedException();
