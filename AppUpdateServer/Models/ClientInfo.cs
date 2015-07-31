@@ -8,6 +8,7 @@ namespace AppUpdateServer.Models
     {
         #region  MachineID
 
+        // ReSharper disable once InconsistentNaming
         private string _machineID = string.Empty;
 
         /// <summary>
@@ -18,6 +19,22 @@ namespace AppUpdateServer.Models
         {
             get { return _machineID; }
             set { SetProperty(ref _machineID, value); }
+        }
+
+        #endregion
+
+        #region  ClientName
+
+        private string _clientName = string.Empty;
+
+        /// <summary>
+        /// 获取或设置 ClientName 属性.
+        /// 修改属性值会触发 PropertyChanged 事件. 
+        /// </summary>
+        public string ClientName
+        {
+            get { return _clientName; }
+            set { SetProperty(ref _clientName, value); }
         }
 
         #endregion
@@ -38,21 +55,37 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  AppBranchID
+        #region  AppBranch
 
-        private string _appBranchID = string.Empty;
+        private AppBranch _appBranch;
 
         /// <summary>
-        /// 获取或设置 AppBranchID 属性.
+        /// 获取或设置 AppBranch 属性.
         /// 修改属性值会触发 PropertyChanged 事件. 
         /// </summary>
-        public string AppBranchID
+        public AppBranch AppBranch
         {
-            get { return _appBranchID; }
-            set { SetProperty(ref _appBranchID, value); }
+            get { return _appBranch; }
+            set
+            {
+                SetProperty(ref _appBranch, value);
+                OnPropertyChanged("AppBranchID");
+            }
         }
 
         #endregion
+
+        public int AppBranchID
+        {
+            get
+            {
+                if (_appBranch == null)
+                {
+                    return -1;
+                }
+                return _appBranch.AppBranchID;
+            }
+        }
 
         #region  IPAddress
 
@@ -73,13 +106,13 @@ namespace AppUpdateServer.Models
 
         #region  RsaPrivateKey
 
-        private byte[] _rsaPrivateKey = null;
+        private string _rsaPrivateKey;
 
         /// <summary>
         /// 获取或设置 RsaPrivateKey 属性.
         /// 修改属性值会触发 PropertyChanged 事件. 
         /// </summary>
-        public byte[] RsaPrivateKey
+        public string RsaPrivateKey
         {
             get { return _rsaPrivateKey; }
             set { SetProperty(ref _rsaPrivateKey, value); }
@@ -89,7 +122,7 @@ namespace AppUpdateServer.Models
 
         #region  Expiration
 
-        private DateTime _expiration= DateTime.MinValue;
+        private DateTime _expiration = DateTime.MinValue;
 
         /// <summary>
         /// 获取或设置 Expiration 属性.
@@ -105,88 +138,32 @@ namespace AppUpdateServer.Models
 
         #region  Serial
 
-        private byte[] _serial = null;
+        private string _serial;
 
         /// <summary>
         /// 获取或设置 Serial 属性.
         /// 修改属性值会触发 PropertyChanged 事件. 
         /// </summary>
-        public byte[] Serial
+        public string Serial
         {
             get { return _serial; }
             set { SetProperty(ref _serial, value); }
         }
 
         #endregion
-    }
 
-    internal sealed class AppSeries : BindableBase
-    {
-        #region  AppSeriesID
+        #region  SetupLocation
 
-        // ReSharper disable once InconsistentNaming
-        private int _appSeriesID = -1;
+        private string _setupLocation = string.Empty;
 
         /// <summary>
-        /// 获取或设置 AppSeriesID 属性.
+        /// 获取或设置 SetupLocation 属性.
         /// 修改属性值会触发 PropertyChanged 事件. 
         /// </summary>
-        // ReSharper disable once InconsistentNaming
-        public int AppSeriesID
+        public string SetupLocation
         {
-            get { return _appSeriesID; }
-            set { SetProperty(ref _appSeriesID, value); }
-        }
-
-        #endregion
-
-        #region  AppSeriesName
-
-        private string _appSeriesName = string.Empty;
-
-        /// <summary>
-        /// 获取或设置 AppSeriesName 属性.
-        /// 修改属性值会触发 PropertyChanged 事件. 
-        /// </summary>
-        public string AppSeriesName
-        {
-            get { return _appSeriesName; }
-            set { SetProperty(ref _appSeriesName, value); }
-        }
-
-        #endregion
-
-        #region  AppSeriesFriendlyDescription
-
-        private string _appSeriesFriendlyDescription = string.Empty;
-
-        /// <summary>
-        /// 获取或设置 AppSeriesFriendlyDescription 属性.
-        /// 修改属性值会触发 PropertyChanged 事件. 
-        /// </summary>
-        public string AppSeriesFriendlyDescription
-        {
-            get { return _appSeriesFriendlyDescription; }
-            set { SetProperty(ref _appSeriesFriendlyDescription, value); }
-        }
-
-        #endregion
-    }
-
-    internal sealed class AppBranches : BindableBase
-    {
-        #region  AppBranchID
-
-        private int _appBranchID = -1;
-
-        /// <summary>
-        /// 获取或设置 AppBranchID 属性.
-        /// 修改属性值会触发 PropertyChanged 事件. 
-        /// </summary>
-        public int AppBranchID
-        {
-            get { return _appBranchID; }
-            set { SetProperty(ref _appBranchID, value); }
+            get { return _setupLocation; }
+            set { SetProperty(ref _setupLocation, value); }
         }
 
         #endregion

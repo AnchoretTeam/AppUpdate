@@ -195,7 +195,7 @@ namespace AppUpdate.ViewModels
                     UpdateInfo = $"错误！检查更新失败！\r\n\r\n异常信息如下：\r\n{future.Exception}";
                     return;
                 }
-                future.Session.Write(new ClientInfo {AppBranchID = "AppBranchID", MachineID = "MachineID"});
+                future.Session.Write(new ClientInfo {AppBranchID = -1, MachineID = "MachineID"});
                 UpdateInfoChecked = true;
             }).ContinueWith(t =>
             {

@@ -6,8 +6,8 @@ namespace AppUpdate.Models
     public sealed class ClientInfo : IClientInfo
     {
         public string MachineID { get; set; }
-        public string AppBranchID { get; set; }
-        public byte[] Serial { get; set; }
+        public int AppBranchID { get; set; }
+        public string Serial { get; set; }
         //...
     }
 }

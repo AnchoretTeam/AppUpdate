@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using AppUpdate.Core;
 using AppUpdate.Core.Models;
 
 namespace AppUpdateServer.Models

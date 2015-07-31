@@ -5,7 +5,7 @@
         // ReSharper disable once InconsistentNaming
         string MachineID { set; get; }
         // ReSharper disable once InconsistentNaming
-        string AppBranchID { set; get; }
-        byte[] Serial { set; get; }
+        int AppBranchID { get; }
+        string Serial { set; get; }
     }
 }
