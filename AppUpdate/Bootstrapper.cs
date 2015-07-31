@@ -2,6 +2,8 @@
 using System.IO;
 using System.Windows;
 using AppUpdate.Core;
+using AppUpdate.Core.Helpers;
+using AppUpdate.Core.Models;
 using AppUpdate.Core.Network.Filter.Codec.Demux;
 using AppUpdate.Core.Network.MessageHandlers;
 using AppUpdate.Events;
@@ -34,8 +36,10 @@ namespace AppUpdate
 
             // 添加过滤器
             var demuxingCodec = new DemuxingProtocolCodecFactory();
-            demuxingCodec.AddMessageEncoder<IAppUpdateInfo, AppUpdateInfoEncoder>();
+            demuxingCodec.AddMessageEncoder<IClientInfo, ClientInfoProtocolEncoder>();
             demuxingCodec.AddMessageEncoder<IList<IFileHash>, FileHashesProtocolEncoder>();
+            demuxingCodec.AddMessageDecoder<TransferingZipFileProtocolDecoder>();
+            demuxingCodec.AddMessageDecoder<UpdateFileCollectionProtocolDecoder>();
             connector.FilterChain.AddLast("codec", new ProtocolCodecFilter(demuxingCodec));
             connector.FilterChain.AddLast("logger", new LoggingFilter());
 
@@ -74,7 +78,7 @@ namespace AppUpdate
             }));
             demuxingHandler.AddReceivedMessageHandler(new TransferingZipFileMessageHandler((s, o) =>
             {
-                //客户端收到服务器发来的更新文件压缩包后,停止正在运行的应用程序,备份旧文件，覆盖新文件
+                // TODO 客户端收到服务器发来的更新文件压缩包后,停止正在运行的应用程序,备份旧文件，覆盖新文件
 
             }));
             connector.Handler = demuxingHandler;

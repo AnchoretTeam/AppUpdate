@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
-using AppUpdate.Core;
-using AppUpdate.Core.Network.Filter.Codec.Demux;
 using AppUpdate.Events;
+using AppUpdate.Models;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.ServiceLocation;
 using Mina.Core.Service;
-using Mina.Filter.Codec;
-using Mina.Filter.Codec.Demux;
-using Mina.Filter.Logging;
-using Mina.Transport.Socket;
 
 namespace AppUpdate.ViewModels
 {
@@ -191,7 +185,7 @@ namespace AppUpdate.ViewModels
             CheckUpdateCommand.RaiseCanExecuteChanged();
             SetupUpdateCommand.RaiseCanExecuteChanged();
             UpdateInfo = "正在检查更新...";
-            //TODO 添加CheckUpdateCommand命令的Execute代码.
+            // 添加CheckUpdateCommand命令的Execute代码.
             return Task.Run(() =>
             {
                 var future = _connector.Connect(new IPEndPoint(RemoteIPAddress, RemotePort));
@@ -201,7 +195,7 @@ namespace AppUpdate.ViewModels
                     UpdateInfo = $"错误！检查更新失败！\r\n\r\n异常信息如下：\r\n{future.Exception}";
                     return;
                 }
-                future.Session.Write(new AppUpdateInfo {AppBranchID = "AppBranchID", MachineID = "MachineID"});
+                future.Session.Write(new ClientInfo {AppBranchID = "AppBranchID", MachineID = "MachineID"});
                 UpdateInfoChecked = true;
             }).ContinueWith(t =>
             {

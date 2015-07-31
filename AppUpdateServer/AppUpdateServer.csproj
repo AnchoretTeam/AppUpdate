@@ -124,11 +124,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\AppUpdateClient.cs" />
-    <Compile Include="Model\FileDescription.cs" />
-    <Compile Include="Network\Filter\Codec\Demux\FileDescriptionProtocolEncoder.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Page Include="View\MainWindow.xaml">
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Models\ClientInfo.cs" />
+    <Compile Include="Interfaces\Models\IClientInfoBindable.cs" />
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Page Include="Converters\Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -136,8 +140,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -174,7 +178,12 @@
       <Project>{67abb7a9-a679-4894-ba6b-ec7840fb33dd}</Project>
       <Name>AppUpdate.Core.Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AppUpdate.Core\AppUpdate.Core.csproj">
+      <Project>{CF1F848A-3C79-4F5F-B72D-5FE364AB5136}</Project>
+      <Name>AppUpdate.Core</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

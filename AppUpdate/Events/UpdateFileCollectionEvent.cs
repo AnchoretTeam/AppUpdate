@@ -1,4 +1,5 @@
 ﻿using AppUpdate.Core;
+using AppUpdate.Core.Models;
 using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace AppUpdate.Events

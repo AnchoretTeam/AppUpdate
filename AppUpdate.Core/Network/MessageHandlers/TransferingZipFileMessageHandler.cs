@@ -1,4 +1,5 @@
 ﻿using System;
+using AppUpdate.Core.Models;
 using Mina.Core.Session;
 using Mina.Handler.Demux;
 

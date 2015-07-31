@@ -5,13 +5,13 @@ using Mina.Handler.Demux;
 
 namespace AppUpdate.Core.Network.MessageHandlers
 {
-    public sealed class UpdateFileCollectionMessageHandler : MessageHandler<IUpdateFileCollection>
+    public sealed class ClientInfoMessageHandler : MessageHandler<IClientInfo>
     {
-        public UpdateFileCollectionMessageHandler(Action<IoSession, IUpdateFileCollection> act)
+        public ClientInfoMessageHandler(Action<IoSession, IClientInfo> act)
             : base(act)
         {
         }
-        public override void HandleMessage(IoSession session, IUpdateFileCollection message)
+        public override void HandleMessage(IoSession session, IClientInfo message)
         {
             base.HandleMessage(session, message);
             //Trace.WriteLine(message);

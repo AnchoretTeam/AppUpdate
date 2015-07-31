@@ -126,10 +126,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Converter\IPAddress2StringConverter.cs" />
+    <Compile Include="Converters\IPAddress2StringConverter.cs" />
     <Compile Include="Events\UpdateFileCollectionEvent.cs" />
+    <Compile Include="Models\ClientInfo.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Page Include="Converter\Converters.xaml">
+    <Page Include="Converters\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

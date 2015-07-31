@@ -57,19 +57,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileHashHelper.cs" />
-    <Compile Include="FileZipHelper.cs" />
-    <Compile Include="IFileHash.cs" />
-    <Compile Include="IAppUpdateInfo.cs" />
-    <Compile Include="ITransferingZipFileInfo.cs" />
-    <Compile Include="IUpdateFileCollection.cs" />
-    <Compile Include="MessageType.cs" />
-    <Compile Include="Network\Filter\Codec\Demux\AppUpdateInfoEncoder.cs" />
+    <Compile Include="Helpers\FileHashHelper.cs" />
+    <Compile Include="Helpers\FileZipHelper.cs" />
+    <Compile Include="Interfaces\Models\IFileHash.cs" />
+    <Compile Include="Interfaces\Models\IClientInfo.cs" />
+    <Compile Include="Interfaces\Models\ITransferingZipFileInfo.cs" />
+    <Compile Include="Interfaces\Models\IUpdateFileCollection.cs" />
+    <Compile Include="Network\MessageType.cs" />
+    <Compile Include="Network\Filter\Codec\Demux\ClientInfoProtocolEncoder.cs" />
     <Compile Include="Network\MessageHandlers\TransferingZipFileMessageHandler.cs" />
     <Compile Include="Network\MessageHandlers\UpdateFileCollectionMessageHandler.cs" />
-    <Compile Include="TransferingZipFile.cs" />
-    <Compile Include="Network\Filter\Codec\Demux\TransferingZipFileDecoder.cs" />
-    <Compile Include="TransferingZipFileInfo.cs" />
+    <Compile Include="Models\TransferingZipFile.cs" />
+    <Compile Include="Network\Filter\Codec\Demux\TransferingZipFileProtocolDecoder.cs" />
+    <Compile Include="Models\TransferingZipFileInfo.cs" />
     <Compile Include="Network\Filter\Codec\Demux\UpdateFileCollectionProtocolDecoder.cs" />
     <Compile Include="Network\Filter\Codec\Demux\FileHashesProtocolEncoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

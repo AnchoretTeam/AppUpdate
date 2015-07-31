@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using AppUpdate.Core.Models;
 using Mina.Core.Buffer;
 using Mina.Core.Session;
 using Mina.Filter.Codec;
@@ -28,7 +29,6 @@ namespace AppUpdate.Core.Network.Filter.Codec.Demux
 
         public MessageDecoderResult Decode(IoSession session, IoBuffer input, IProtocolDecoderOutput output)
         {
-            // TODO Client->Server 所有文件的校验值
             output.Write(_decodeMessage);
             return MessageDecoderResult.OK;
         }

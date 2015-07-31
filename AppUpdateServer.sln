@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUpdateServer", "AppUpdateServer\AppUpdateServer.csproj", "{4D7C3ACC-DE0A-4677-9BCB-8748B76B7518}"
 EndProject
@@ -10,6 +10,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUpdate.Core", "AppUpdate.Core\AppUpdate.Core.csproj", "{CF1F848A-3C79-4F5F-B72D-5FE364AB5136}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUpdate.Core.Server", "AppUpdate.Core.Server\AppUpdate.Core.Server.csproj", "{67ABB7A9-A679-4894-BA6B-EC7840FB33DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{971F6A79-4561-4E99-92F9-C1F6B065869D}"
+	ProjectSection(SolutionItems) = preProject
+		AppUpdateServerDB.sqlite3 = AppUpdateServerDB.sqlite3
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
