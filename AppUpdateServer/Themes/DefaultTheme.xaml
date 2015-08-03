@@ -2,13 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewModels="clr-namespace:AppUpdateServer.ViewModels;assembly=AppUpdateServer.Shared">
     <Style x:Key="PrismRegionTabItemStyle" TargetType="{x:Type TabItem}">
-        <Setter Property="HeaderTemplate">
-            <Setter.Value>
-                <!--显示里面子视图TabItem的TabHead-->
-                <DataTemplate DataType="{x:Type viewModels:ITabItemViewModel}">
-                    <ContentPresenter Content="{Binding TabContent}"/>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Header" Value="{Binding DataContext.TabContent}"/>
     </Style>
 </ResourceDictionary>

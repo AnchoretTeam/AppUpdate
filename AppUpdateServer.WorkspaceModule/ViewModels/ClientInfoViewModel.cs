@@ -78,13 +78,7 @@ namespace AppUpdateServer.ViewModels
 
         #region ITabItemViewModel
 
-        public object TabContent
-        {
-            get
-            {
-                return "客户端信息";
-            }
-        }
+        public object TabContent { get; } = "客户端信息";
 
         #endregion
     }
