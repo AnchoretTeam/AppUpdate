@@ -53,7 +53,7 @@ namespace AppUpdate.ViewModels
             }
         }
 
-        #region  RemoteIPAddress
+        #region RemoteIPAddress
 
         // ReSharper disable once InconsistentNaming
         private IPAddress _remoteIPAddress = IPAddress.Loopback;
@@ -71,7 +71,7 @@ namespace AppUpdate.ViewModels
 
         #endregion
 
-        #region  RemotePort
+        #region RemotePort
 
         private int _remotePort = 2001;
 
@@ -87,7 +87,7 @@ namespace AppUpdate.ViewModels
 
         #endregion
 
-        #region  Logs
+        #region Logs
 
         private ObservableCollection<string> _logs = new ObservableCollection<string>();
 
@@ -103,7 +103,7 @@ namespace AppUpdate.ViewModels
 
         #endregion
 
-        #region  IsBusy
+        #region IsBusy
 
         private bool _isBusy = false;
 
@@ -119,7 +119,7 @@ namespace AppUpdate.ViewModels
 
         #endregion
 
-        #region  UpdateInfo
+        #region UpdateInfo
 
         private string _updateInfo = "请检查更新...";
 
@@ -135,7 +135,7 @@ namespace AppUpdate.ViewModels
 
         #endregion
 
-        #region  UpdateInfoChecked
+        #region UpdateInfoChecked
 
         private bool _updateInfoChecked = false;
 

@@ -9,8 +9,11 @@ using AppUpdate.Core;
 using AppUpdate.Core.Models;
 using AppUpdate.Core.Network.Filter.Codec.Demux;
 using AppUpdate.Core.Network.MessageHandlers;
+using AppUpdateServer.Modules;
 using AppUpdateServer.Properties;
+using AppUpdateServer.Services;
 using AppUpdateServer.Views;
+using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.ServiceLocation;
@@ -65,6 +68,30 @@ namespace AppUpdateServer
         {
             base.ConfigureContainer();
             InitializeSocketService();
+            Container.RegisterInstance<IClientListService>(new ClientListService());
+        }
+
+        protected override IModuleCatalog CreateModuleCatalog()
+        {
+            return new ModuleCatalog();
+        }
+
+        protected override void ConfigureModuleCatalog()
+        {
+            var regionType = typeof(WorkspaceModule);
+            ModuleCatalog.AddModule(new ModuleInfo
+            {
+                ModuleName = regionType.Name,
+                ModuleType = regionType.AssemblyQualifiedName,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+            regionType = typeof(ClientListModule);
+            ModuleCatalog.AddModule(new ModuleInfo
+            {
+                ModuleName = regionType.Name,
+                ModuleType = regionType.AssemblyQualifiedName,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
         }
 
         protected override DependencyObject CreateShell()

@@ -1,15 +1,12 @@
-using System;
+锘縰sing System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Data.SQLite;
 using System.Linq;
-using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 using AppUpdate.Core.Helpers;
 using AppUpdateServer.Models;
-using AppUpdateServer.Properties;
 using AppUpdateServer.Services;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -18,17 +15,16 @@ using Mina.Core.Service;
 
 namespace AppUpdateServer.ViewModels
 {
-    internal sealed class ShellViewModel : BindableBase
+    public sealed class ClientsTreeViewModel : BindableBase
     {
         private readonly IEventAggregator _aggregator;
         private readonly IoAcceptor _acceptor;
         private readonly IClientListService _clientListService;
 
-        public ShellViewModel()
+        public ClientsTreeViewModel()
         {
-            //获取事件聚合器  
             _aggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
-            _clientListService = ServiceLocator.Current.GetInstance<IClientListService>();
+            _clientListService= ServiceLocator.Current.GetInstance<IClientListService>();
 
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
@@ -36,11 +32,11 @@ namespace AppUpdateServer.ViewModels
             }
             else
             {
-                //获取Socket
+                //鑾峰彇Socket
                 _acceptor = ServiceLocator.Current.GetInstance<IoAcceptor>();
             }
         }
-
+        public IClientListService ClientListService => _clientListService;
 
         public BulkObservableCollection<IClientInfoBindable> ClientInfos => _clientListService?.ClientInfos;
 

@@ -3,9 +3,9 @@ using Microsoft.Practices.Prism.Mvvm;
 
 namespace AppUpdateServer.Models
 {
-    internal sealed class AppSeries : BindableBase
+    internal sealed class AppSeries : BindableBase, IAppSeries
     {
-        #region  AppSeriesID
+        #region AppSeriesID
 
         // ReSharper disable once InconsistentNaming
         private int _appSeriesID = -1;
@@ -23,7 +23,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  AppSeriesName
+        #region AppSeriesName
 
         private string _appSeriesName = string.Empty;
 
@@ -39,7 +39,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  AppSeriesFriendlyDescription
+        #region AppSeriesFriendlyDescription
 
         private string _appSeriesFriendlyDescription = string.Empty;
 
@@ -55,6 +55,6 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        public BulkObservableCollection<AppBranch> ChildBranches { get; } = new BulkObservableCollection<AppBranch>();
+        public BulkObservableCollection<IAppBranch> ChildBranches { get; } = new BulkObservableCollection<IAppBranch>();
     }
 }

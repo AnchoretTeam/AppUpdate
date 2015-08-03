@@ -3,9 +3,9 @@
     public interface IClientInfo
     {
         // ReSharper disable once InconsistentNaming
-        string MachineID { set; get; }
+        string MachineID { get; }
         // ReSharper disable once InconsistentNaming
         int AppBranchID { get; }
-        string Serial { set; get; }
+        string Serial { get; }
     }
 }

@@ -1,25 +1,35 @@
 using AppUpdate.Core.Helpers;
+using AppUpdateServer.Services;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.ServiceLocation;
 
 namespace AppUpdateServer.Models
 {
-    internal sealed class AppBranch : BindableBase
-    {
-        #region  AppSeries
 
-        private AppSeries _appSeries;
+    internal sealed class AppBranch : BindableBase, IAppBranch
+    {
+        #region AppSeries
+
+        private IAppSeries _appSeries;
 
         /// <summary>
         /// 获取或设置 AppSeries 属性.
         /// 修改属性值会触发 PropertyChanged 事件. 
         /// </summary>
-        public AppSeries AppSeries
+        public IAppSeries AppSeries
         {
             get { return _appSeries; }
             set
             {
+                var oldValue = _appSeries;
                 SetProperty(ref _appSeries, value);
                 OnPropertyChanged("AppSeriesID");
+                if (oldValue != value && oldValue != null && value != null)
+                {
+                    value.ChildBranches.Add(this);
+                    oldValue.ChildBranches.Remove(this);
+                    ServiceLocator.Current.GetInstance<IClientListService>().SelectedItem = this;
+                }
             }
         }
 
@@ -38,7 +48,7 @@ namespace AppUpdateServer.Models
             }
         }
 
-        #region  AppBranchID
+        #region AppBranchID
 
         // ReSharper disable once InconsistentNaming
         private int _appBranchID = -1;
@@ -56,7 +66,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  AppBranchName
+        #region AppBranchName
 
         private string _appBranchName = string.Empty;
 
@@ -72,7 +82,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  AppBranchFriendlyDescription
+        #region AppBranchFriendlyDescription
 
         private string _appBranchFriendlyDescription = string.Empty;
 

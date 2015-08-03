@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Net;
+using AppUpdateServer.Services;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.ServiceLocation;
 
 namespace AppUpdateServer.Models
 {
     internal sealed class ClientInfo : BindableBase, IClientInfoBindable
     {
-        #region  MachineID
+        #region MachineID
 
         // ReSharper disable once InconsistentNaming
         private string _machineID = string.Empty;
@@ -23,7 +25,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  ClientName
+        #region ClientName
 
         private string _clientName = string.Empty;
 
@@ -39,7 +41,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  Company
+        #region Company
 
         private string _company = string.Empty;
 
@@ -55,21 +57,28 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  AppBranch
+        #region AppBranch
 
-        private AppBranch _appBranch;
+        private IAppBranch _appBranch;
 
         /// <summary>
         /// 获取或设置 AppBranch 属性.
         /// 修改属性值会触发 PropertyChanged 事件. 
         /// </summary>
-        public AppBranch AppBranch
+        public IAppBranch AppBranch
         {
             get { return _appBranch; }
             set
             {
+                var oldValue = _appBranch;
                 SetProperty(ref _appBranch, value);
                 OnPropertyChanged("AppBranchID");
+                if (oldValue!=value && oldValue!=null && value!=null)
+                {
+                    oldValue.ChildClients.Remove(this);
+                    value.ChildClients.Add(this);
+                    ServiceLocator.Current.GetInstance<IClientListService>().SelectedItem = this;
+                }
             }
         }
 
@@ -87,7 +96,7 @@ namespace AppUpdateServer.Models
             }
         }
 
-        #region  IPAddress
+        #region IPAddress
 
         private IPAddress _ipAddress = IPAddress.Loopback;
 
@@ -104,7 +113,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  RsaPrivateKey
+        #region RsaPrivateKey
 
         private string _rsaPrivateKey;
 
@@ -120,7 +129,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  Expiration
+        #region Expiration
 
         private DateTime _expiration = DateTime.MinValue;
 
@@ -136,7 +145,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  Serial
+        #region Serial
 
         private string _serial;
 
@@ -152,7 +161,7 @@ namespace AppUpdateServer.Models
 
         #endregion
 
-        #region  SetupLocation
+        #region SetupLocation
 
         private string _setupLocation = string.Empty;
 
