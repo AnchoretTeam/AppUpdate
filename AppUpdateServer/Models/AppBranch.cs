@@ -1,6 +1,8 @@
 using AppUpdate.Core.Helpers;
+using AppUpdateServer.Events;
 using AppUpdateServer.Services;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.ServiceLocation;
 
 namespace AppUpdateServer.Models
@@ -8,6 +10,14 @@ namespace AppUpdateServer.Models
 
     internal sealed class AppBranch : BindableBase, IAppBranch
     {
+        private readonly IEventAggregator _aggregator;
+
+        public AppBranch()
+        {
+            //获取事件聚合器  
+            _aggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
+        }
+
         #region AppSeries
 
         private IAppSeries _appSeries;
@@ -28,7 +38,7 @@ namespace AppUpdateServer.Models
                 {
                     value.ChildBranches.Add(this);
                     oldValue.ChildBranches.Remove(this);
-                    ServiceLocator.Current.GetInstance<IClientListService>().SelectedItem = this;
+                    _aggregator.GetEvent<SpecifyAnAppDefinitionItemToSelectEvent>().Publish(this);
                 }
             }
         }

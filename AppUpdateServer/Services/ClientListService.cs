@@ -81,7 +81,7 @@ namespace AppUpdateServer.Services
                     }
                     AppBranches.EndBulkOperation();
                 }
-                sqlCmd = new SQLiteCommand("SELECT * FROM [AppUpdateClientTable] ORDER BY AppBrancheID ASC", sqlCon);
+                sqlCmd = new SQLiteCommand("SELECT * FROM [AppUpdateClientsTable] ORDER BY AppBrancheID ASC", sqlCon);
                 using (var sqlReader = sqlCmd.ExecuteReader())
                 {
                     IAppBranch branch = null;
@@ -124,67 +124,6 @@ namespace AppUpdateServer.Services
         public BulkObservableCollection<IAppBranch> AppBranches { get; } = new BulkObservableCollection<IAppBranch>();
 
         public BulkObservableCollection<IAppSeries> AppSeries { get; } = new BulkObservableCollection<IAppSeries>();
-
-        #region SelectClientInfo
-
-        /// <summary>
-        /// 获取或设置 SelectClientInfo 属性.
-        /// 修改属性值会触发 PropertyChanged 事件. 
-        /// </summary>
-        public IClientInfoBindable SelectedClientInfo
-        {
-            get { return SelectedItem as IClientInfoBindable; }
-        }
-
-        #endregion
-
-        #region SelectedAppBranch
-
-        /// <summary>
-        /// 获取或设置 SelectedAppBranch 属性.
-        /// 修改属性值会触发 PropertyChanged 事件. 
-        /// </summary>
-        public IAppBranch SelectedAppBranch
-        {
-            get { return SelectedItem as IAppBranch; }
-        }
-
-        #endregion
-
-        #region SelectedAppSeries
-
-        /// <summary>
-        /// 获取或设置 SelectedAppSeries 属性.
-        /// 修改属性值会触发 PropertyChanged 事件. 
-        /// </summary>
-        public IAppSeries SelectedAppSeries
-        {
-            get { return SelectedItem as IAppSeries; }
-        }
-
-        #endregion
-
-        #region SelectedItem
-
-        private object _selectedItem;
-
-        /// <summary>
-        /// 获取或设置 SelectedItem 属性.
-        /// 修改属性值会触发 PropertyChanged 事件. 
-        /// </summary>
-        public object SelectedItem
-        {
-            get { return _selectedItem; }
-            set
-            {
-                SetProperty(ref _selectedItem, value);
-                OnPropertyChanged("SelectedClientInfo");
-                OnPropertyChanged("SelectedAppBranch");
-                OnPropertyChanged("SelectedAppSeries");
-            }
-        }
-
-        #endregion
 
         #region IDisposable
 

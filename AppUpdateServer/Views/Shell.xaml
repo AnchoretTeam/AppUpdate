@@ -26,6 +26,20 @@
         <GridSplitter Grid.Column="1" Grid.Row="0" Width="5" ResizeDirection="Columns" ShowsPreview="True" ResizeBehavior="PreviousAndNext"/>
         <TabControl Grid.Column="2" Grid.Row="0" prism:RegionManager.RegionName="WorkspaceRegion"
                     ItemContainerStyle ="{StaticResource PrismRegionTabItemStyle}">
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ContentPresenter x:Name="presenter" Content="{Binding}"/>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding DataContext.Visibility}" Value="Collapsed">
+                            <Setter TargetName="presenter" Property="Content">
+                                <Setter.Value>
+                                    <TextBlock Text="未选择有效项" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
         </TabControl>
         <GridSplitter Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Height="5" ResizeDirection="Rows" ShowsPreview="True" ResizeBehavior="PreviousAndNext" HorizontalAlignment="Stretch"/>
         <TextBox Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" IsReadOnly="True" VerticalScrollBarVisibility="Visible"/>

@@ -13,7 +13,7 @@
         <TreeView x:Name="treeView" Grid.Column="0" Grid.Row="0"
                   ItemsSource="{Binding AppSeries}"
                   attachedProperties:BindableSelectedItemHelper.Attach="True" 
-                  attachedProperties:BindableSelectedItemHelper.SelectedItem="{Binding ClientListService.SelectedItem, Mode=TwoWay}"
+                  attachedProperties:BindableSelectedItemHelper.SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   VirtualizingStackPanel.IsVirtualizing="True"
                   VirtualizingStackPanel.VirtualizationMode="Recycling">
             <TreeView.ItemContainerStyle>

@@ -3,5 +3,6 @@
                     xmlns:viewModels="clr-namespace:AppUpdateServer.ViewModels;assembly=AppUpdateServer.Shared">
     <Style x:Key="PrismRegionTabItemStyle" TargetType="{x:Type TabItem}">
         <Setter Property="Header" Value="{Binding DataContext.TabContent}"/>
+        <Setter Property="Visibility" Value="{Binding DataContext.Visibility}"/>
     </Style>
 </ResourceDictionary>

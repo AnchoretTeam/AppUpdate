@@ -13,13 +13,5 @@ namespace AppUpdateServer.Services
         BulkObservableCollection<IAppBranch> AppBranches { get; }
 
         BulkObservableCollection<IAppSeries> AppSeries { get; }
-
-        IClientInfoBindable SelectedClientInfo { get; }
-
-        IAppBranch SelectedAppBranch { get; }
-
-        IAppSeries SelectedAppSeries { get; }
-
-        object SelectedItem { set; get; }
     }
 }

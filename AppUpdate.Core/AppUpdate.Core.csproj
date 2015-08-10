@@ -67,6 +67,7 @@
     <Compile Include="Interfaces\Models\IClientInfo.cs" />
     <Compile Include="Interfaces\Models\ITransferingZipFileInfo.cs" />
     <Compile Include="Interfaces\Models\IUpdateFileCollection.cs" />
+    <Compile Include="Models\UpdateFileCollection.cs" />
     <Compile Include="Network\MessageType.cs" />
     <Compile Include="Network\Filter\Codec\Demux\ClientInfoProtocolEncoder.cs" />
     <Compile Include="Network\MessageHandlers\TransferingZipFileMessageHandler.cs" />

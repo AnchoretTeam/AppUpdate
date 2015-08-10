@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using AppUpdate.Core.Helpers;
+using AppUpdateServer.Events;
 using AppUpdateServer.Models;
 using AppUpdateServer.Services;
 using Microsoft.Practices.Prism.Mvvm;
@@ -35,8 +36,33 @@ namespace AppUpdateServer.ViewModels
                 //获取Socket
                 _acceptor = ServiceLocator.Current.GetInstance<IoAcceptor>();
             }
+            _aggregator.GetEvent<SpecifyAnAppDefinitionItemToSelectEvent>().Subscribe(i =>
+            {
+                SelectedItem = i;
+            });
         }
-        public IClientListService ClientListService => _clientListService;
+
+        #region SelectedItem
+
+        private IAppDefinitionItem _selectedItem;
+
+        /// <summary>
+        /// 获取或设置 SelectedItem 属性.
+        /// 修改属性值会触发 PropertyChanged 事件. 
+        /// </summary>
+        public IAppDefinitionItem SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                if (SetProperty(ref _selectedItem, value))
+                {
+                    _aggregator.GetEvent<SelectedAppDefinitionItemChangedEvent>().Publish(value);
+                }
+            }
+        }
+
+        #endregion
 
         public BulkObservableCollection<IClientInfoBindable> ClientInfos => _clientListService?.ClientInfos;
 

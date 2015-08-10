@@ -73,7 +73,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\IPAddress2StringConverter.cs" />
+    <Compile Include="Events\SelectedAppDefinitionItemChangedEvent.cs" />
+    <Compile Include="Events\SpecifyAnAppDefinitionItemToSelectEvent.cs" />
     <Compile Include="Models\IAppBranch.cs" />
+    <Compile Include="Models\IAppDefinitionItem.cs" />
     <Compile Include="Models\IClientInfoBindable.cs" />
     <Compile Include="Services\IClientListService.cs" />
     <Compile Include="Models\IAppSeries.cs" />

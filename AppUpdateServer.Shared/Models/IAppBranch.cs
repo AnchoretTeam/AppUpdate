@@ -3,7 +3,7 @@ using AppUpdate.Core.Helpers;
 
 namespace AppUpdateServer.Models
 {
-    public interface IAppBranch : INotifyPropertyChanged
+    public interface IAppBranch : IAppDefinitionItem
     {
         /// <summary>
         /// 获取或设置 AppSeries 属性.

@@ -12,17 +12,17 @@
 
     <Grid>
         <TextBlock Text="机器识别码（MachineID)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,11,0,0"/>
-        <TextBox VerticalAlignment="Top" Margin="185,10,10,0" TextWrapping="Wrap" Height="48" Text="{Binding ClientListService.SelectedClientInfo.MachineID}" VerticalScrollBarVisibility="Auto"/>
+        <TextBox VerticalAlignment="Top" Margin="185,10,10,0" TextWrapping="Wrap" Height="48" Text="{Binding CurrentClientInfo.MachineID}" VerticalScrollBarVisibility="Auto"/>
         <TextBlock Text="客户端名称（ClientName)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,64,0,0"/>
-        <TextBox VerticalAlignment="Top" Margin="185,63,10,0" TextWrapping="Wrap" Text="{Binding ClientListService.SelectedClientInfo.ClientName}"/>
+        <TextBox VerticalAlignment="Top" Margin="185,63,10,0" TextWrapping="Wrap" Text="{Binding CurrentClientInfo.ClientName}"/>
         <TextBlock Text="用户/公司（Company)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,86,0,0"/>
-        <TextBox VerticalAlignment="Top" Margin="185,85,10,0" TextWrapping="Wrap" Text="{Binding ClientListService.SelectedClientInfo.Company}"/>
+        <TextBox VerticalAlignment="Top" Margin="185,85,10,0" TextWrapping="Wrap" Text="{Binding CurrentClientInfo.Company}"/>
         <TextBlock Text="软件分支（AppBranch)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,110,0,0"/>
         <ComboBox VerticalAlignment="Top" Margin="185,107,10,0" 
-			SelectedItem="{Binding ClientListService.SelectedClientInfo.AppBranch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+			SelectedItem="{Binding CurrentClientInfo.AppBranch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
 			ItemsSource="{Binding ClientListService.AppBranches}">
             <ComboBox.ToolTip>
-                <TextBlock DataContext="{Binding ClientListService.SelectedClientInfo.AppBranch}">
+                <TextBlock DataContext="{Binding CurrentClientInfo.AppBranch}">
                     <Run Text="{Binding AppSeries.AppSeriesFriendlyDescription}"/>
                     <Run Text=" - "/>
                     <Run Text="{Binding AppBranchFriendlyDescription}"/>
@@ -43,15 +43,15 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock Text="IP地址（IPAddress)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,134,0,0"/>
-        <TextBox VerticalAlignment="Top" Margin="185,133,10,0" TextWrapping="Wrap" Text="{Binding ClientListService.SelectedClientInfo.IPAddress, Converter={StaticResource IPAddress2StringConverter}}"/>
+        <TextBox VerticalAlignment="Top" Margin="185,133,10,0" TextWrapping="Wrap" Text="{Binding CurrentClientInfo.IPAddress, Converter={StaticResource IPAddress2StringConverter}}"/>
         <TextBlock Text="注册私钥（RsaPrivateKey)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,156,0,0"/>
-        <TextBox VerticalAlignment="Top" Margin="185,155,10,0" TextWrapping="Wrap" Text="{Binding ClientListService.SelectedClientInfo.RsaPrivateKey}" Height="48" VerticalScrollBarVisibility="Auto"/>
+        <TextBox VerticalAlignment="Top" Margin="185,155,10,0" TextWrapping="Wrap" Text="{Binding CurrentClientInfo.RsaPrivateKey}" Height="48" VerticalScrollBarVisibility="Auto"/>
         <TextBlock Text="支持期限（Expiration)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,211,0,0"/>
-        <DatePicker VerticalAlignment="Top" Margin="185,208,10,0"  SelectedDate="{Binding ClientListService.SelectedClientInfo.Expiration}"/>
+        <DatePicker VerticalAlignment="Top" Margin="185,208,10,0"  SelectedDate="{Binding CurrentClientInfo.Expiration}"/>
         <TextBlock Text="序列号（Serial)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,238,0,0"/>
-        <TextBox VerticalAlignment="Top" Margin="185,237,10,0" TextWrapping="Wrap" Text="{Binding ClientListService.SelectedClientInfo.Serial}" Height="48" VerticalScrollBarVisibility="Auto"/>
+        <TextBox VerticalAlignment="Top" Margin="185,237,10,0" TextWrapping="Wrap" Text="{Binding CurrentClientInfo.Serial}" Height="48" VerticalScrollBarVisibility="Auto"/>
         <TextBlock Text="设备部署地点（SetupLocation)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,291,0,0"/>
-        <TextBox VerticalAlignment="Top" Margin="185,290,10,0" TextWrapping="Wrap" Text="{Binding ClientListService.SelectedClientInfo.SetupLocation}" Height="48" VerticalScrollBarVisibility="Auto"/>
+        <TextBox VerticalAlignment="Top" Margin="185,290,10,0" TextWrapping="Wrap" Text="{Binding CurrentClientInfo.SetupLocation}" Height="48" VerticalScrollBarVisibility="Auto"/>
         <Button Content="保存更改" Margin="0,362,10,10" HorizontalAlignment="Right" Width="75" Height="24" VerticalAlignment="Top"/>
         <Button Content="重置" Margin="0,362,90,10" HorizontalAlignment="Right" Width="75" Height="24" VerticalAlignment="Top" Command="{Binding ResetCommand}"/>
     </Grid>

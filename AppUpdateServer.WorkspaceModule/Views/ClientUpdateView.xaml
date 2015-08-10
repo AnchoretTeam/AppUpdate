@@ -9,6 +9,23 @@
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              Background="Transparent" MinWidth="400" MinHeight="396" d:DesignWidth="400" d:DesignHeight="396">
     <Grid>
-            <TextBlock Text="ClientUpdateView"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Content="启动更新服务"/>
+            <Button Content="停止更新服务"/>
+        </StackPanel>
+        <ListView ItemsSource="{Binding UpdateSet}" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="编译日期" DisplayMemberBinding="{Binding ReleaseTime, StringFormat=\{0:d\}}" />
+                    <GridViewColumn Header="更新类型" DisplayMemberBinding="{Binding UpdateType}"/>
+                    <GridViewColumn Header="更新描述" DisplayMemberBinding="{Binding Description}"/>
+                    <GridViewColumn Header="更新包" DisplayMemberBinding="{Binding PackageName}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

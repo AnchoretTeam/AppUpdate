@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Net;
+using AppUpdateServer.Events;
 using AppUpdateServer.Services;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.ServiceLocation;
 
 namespace AppUpdateServer.Models
 {
     internal sealed class ClientInfo : BindableBase, IClientInfoBindable
     {
+        private readonly IEventAggregator _aggregator;
+        public ClientInfo()
+        {
+            //获取事件聚合器  
+            _aggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
+        }
+
         #region MachineID
 
         // ReSharper disable once InconsistentNaming
@@ -77,7 +86,7 @@ namespace AppUpdateServer.Models
                 {
                     oldValue.ChildClients.Remove(this);
                     value.ChildClients.Add(this);
-                    ServiceLocator.Current.GetInstance<IClientListService>().SelectedItem = this;
+                    _aggregator.GetEvent<SpecifyAnAppDefinitionItemToSelectEvent>().Publish(this);
                 }
             }
         }
